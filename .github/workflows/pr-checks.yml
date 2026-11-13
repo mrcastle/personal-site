@@ -17,7 +17,7 @@ jobs:
     if: github.event_name != 'schedule'
     permissions:
       contents: read
-    uses: mrcastle/ci-workflows/.github/workflows/node.yml@8778df5021ec9cf83980bee131e549871b08ead0 # feat/per-check-jobs (pre-release)
+    uses: mrcastle/ci-workflows/.github/workflows/node.yml@df44adc0bd7bae9da7b02af308d018d61d8ff32e # feat/per-check-jobs (pre-release)
     with:
       node-version: "24"
       checks: |
@@ -29,7 +29,7 @@ jobs:
     permissions:
       contents: read
       actions: read
-    uses: mrcastle/ci-workflows/.github/workflows/security.yml@8778df5021ec9cf83980bee131e549871b08ead0 # feat/per-check-jobs (pre-release)
+    uses: mrcastle/ci-workflows/.github/workflows/security.yml@df44adc0bd7bae9da7b02af308d018d61d8ff32e # feat/per-check-jobs (pre-release)
 
   report:
     needs: [ci, security]
@@ -37,4 +37,4 @@ jobs:
     permissions:
       actions: read
       pull-requests: write
-    uses: mrcastle/ci-workflows/.github/workflows/report.yml@8778df5021ec9cf83980bee131e549871b08ead0 # feat/per-check-jobs (pre-release)
+    uses: mrcastle/ci-workflows/.github/workflows/report.yml@df44adc0bd7bae9da7b02af308d018d61d8ff32e # feat/per-check-jobs (pre-release)
