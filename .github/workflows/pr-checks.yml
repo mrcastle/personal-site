@@ -3,7 +3,7 @@ name: pr-checks
 on:
   pull_request:
   schedule:
-    - cron: "0 7 * * 1" # weekly: catch new CVEs in unchanged lockfiles
+    - cron: "0 7 * * 1" # weekly: security only, to catch new CVEs in unchanged lockfiles
   workflow_dispatch:
 
 permissions: {}
@@ -13,11 +13,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  node:
+  ci:
     if: github.event_name != 'schedule'
     permissions:
       contents: read
-    uses: mrcastle/ci-workflows/.github/workflows/node.yml@5d8318e7d70bc5f553a8fb3bfa5ab20ff37ef617 # v1.0.0
+    uses: mrcastle/ci-workflows/.github/workflows/node.yml@8778df5021ec9cf83980bee131e549871b08ead0 # feat/per-check-jobs (pre-release)
     with:
       node-version: "24"
       checks: |
@@ -29,4 +29,12 @@ jobs:
     permissions:
       contents: read
       actions: read
-    uses: mrcastle/ci-workflows/.github/workflows/security.yml@5d8318e7d70bc5f553a8fb3bfa5ab20ff37ef617 # v1.0.0
+    uses: mrcastle/ci-workflows/.github/workflows/security.yml@8778df5021ec9cf83980bee131e549871b08ead0 # feat/per-check-jobs (pre-release)
+
+  report:
+    needs: [ci, security]
+    if: ${{ always() && github.event_name == 'pull_request' }}
+    permissions:
+      actions: read
+      pull-requests: write
+    uses: mrcastle/ci-workflows/.github/workflows/report.yml@8778df5021ec9cf83980bee131e549871b08ead0 # feat/per-check-jobs (pre-release)
