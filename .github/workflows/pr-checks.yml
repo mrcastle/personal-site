@@ -1,0 +1,32 @@
+name: pr-checks
+
+on:
+  pull_request:
+  schedule:
+    - cron: "0 7 * * 1" # weekly: catch new CVEs in unchanged lockfiles
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  node:
+    if: github.event_name != 'schedule'
+    permissions:
+      contents: read
+    uses: mrcastle/ci-workflows/.github/workflows/node.yml@5d8318e7d70bc5f553a8fb3bfa5ab20ff37ef617 # v1.0.0
+    with:
+      node-version: "24"
+      checks: |
+        lint: npm run lint
+        typecheck: npx tsc -b
+        build: npm run build
+
+  security:
+    permissions:
+      contents: read
+      actions: read
+    uses: mrcastle/ci-workflows/.github/workflows/security.yml@5d8318e7d70bc5f553a8fb3bfa5ab20ff37ef617 # v1.0.0
