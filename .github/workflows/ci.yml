@@ -18,7 +18,7 @@ jobs:
       contents: read
       actions: read # Jobs API (report), zizmor online audits
       pull-requests: write # report comment
-    uses: mrcastle/ci-workflows/.github/workflows/node.yml@52ec4318257c55803779bf0799ef9528ea7d2a7d # feat/per-check-jobs (pre-release)
+    uses: mrcastle/ci-workflows/.github/workflows/node.yml@836b9786cdbe1239a1dde27d86abc0df501da4c5 # feat/per-check-jobs (pre-release)
     with:
       node-version: "24"
       checks: |
