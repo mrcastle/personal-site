@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  pull_request:
+  schedule:
+    - cron: "0 7 * * 1" # weekly, to catch new CVEs in unchanged lockfiles
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  node:
+    permissions:
+      contents: read
+      actions: read # Jobs API (report), zizmor online audits
+      pull-requests: write # report comment
+    uses: mrcastle/ci-workflows/.github/workflows/node.yml@52ec4318257c55803779bf0799ef9528ea7d2a7d # feat/per-check-jobs (pre-release)
+    with:
+      node-version: "24"
+      checks: |
+        lint: npm run lint
+        typecheck: npx tsc -b
+        build: npm run build
