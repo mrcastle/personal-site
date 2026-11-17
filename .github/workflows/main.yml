@@ -3,26 +3,34 @@ on:
     branches: [main]
 
 name: Deploy on push
+
+permissions: {}
+
 jobs:
   web-deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Get latest code
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Use Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "24"
 
+      # Install scripts are off: this job holds the FTP credentials.
       - name: Build Project
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm run build
 
       - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@3a9c65ae0fc12ac924ccef8afc26941cc43aad0b # v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USER }}
