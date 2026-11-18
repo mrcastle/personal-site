@@ -20,45 +20,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Check build
-      shell: bash
-      run: |
-        [[ -f dist/index.html ]] || { echo "::error::dist/index.html is missing; not deploying."; exit 1; }
-
-    - name: Write key
-      shell: bash
-      env:
-        SSH_KEY: ${{ inputs.ssh-key }}
-      run: (umask 077 && printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/deploy_key")
-
     - name: Sync files
       shell: bash
+      run: bash "$GITHUB_ACTION_PATH/deploy.sh"
       env:
-        TARGET: ${{ inputs.user }}@${{ inputs.host }}
-        PORT: ${{ inputs.port }}
-        KNOWN_HOSTS: ${{ github.action_path }}/known_hosts
-      run: |
-        rsync -rltcvz --delete \
-          --exclude=/.well-known/ --exclude=/cgi-bin/ --exclude=/.ftpquota \
-          -e "ssh -p $PORT -i $RUNNER_TEMP/deploy_key -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$KNOWN_HOSTS" \
-          dist/ "$TARGET:"
-
-    - name: Check key restriction
-      shell: bash
-      env:
-        TARGET: ${{ inputs.user }}@${{ inputs.host }}
-        PORT: ${{ inputs.port }}
-        KNOWN_HOSTS: ${{ github.action_path }}/known_hosts
-      run: |
-        if out=$(ssh -p "$PORT" -i "$RUNNER_TEMP/deploy_key" -o IdentitiesOnly=yes -o BatchMode=yes \
-          -o StrictHostKeyChecking=yes -o "UserKnownHostsFile=$KNOWN_HOSTS" "$TARGET" true 2>&1) \
-          || [[ $out != *"is not rsync"* ]]; then
-          echo "::error::The deploy key isn't restricted to rsync on the server. Check ~/.ssh/authorized_keys."
-          exit 1
-        fi
-        echo "Deploy key is still restricted to rsync."
-
-    - name: Remove key
-      if: always()
-      shell: bash
-      run: rm -f "$RUNNER_TEMP/deploy_key"
+        SSH_HOST: ${{ inputs.host }}
+        SSH_PORT: ${{ inputs.port }}
+        SSH_USER: ${{ inputs.user }}
+        SSH_KEY: ${{ inputs.ssh-key }}
