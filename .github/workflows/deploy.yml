@@ -44,22 +44,16 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Get deploy script
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-          sparse-checkout: .github/deploy
-
       - name: Get build
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: site
           path: dist
 
-      - name: Sync files
-        run: bash .github/deploy/deploy.sh
-        env:
-          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_HOST: sleeplessjade.com
-          DEPLOY_PORT: "21098"
+      - name: Deploy
+        uses: $/.github/actions/deploy
+        with:
+          host: sleeplessjade.com
+          port: "21098"
+          user: ${{ secrets.DEPLOY_USER }}
+          ssh-key: ${{ secrets.DEPLOY_SSH_KEY }}
