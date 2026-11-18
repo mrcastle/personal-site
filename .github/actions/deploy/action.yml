@@ -1,0 +1,30 @@
+name: deploy
+description: >-
+  Sync dist/ to public_html over SSH with rsync. The server restricts the key to rsync writes
+  into public_html (rrsync -wo), and the host key is pinned in known_hosts.
+
+inputs:
+  host:
+    description: SSH host. Must match the entry in known_hosts.
+    required: true
+  port:
+    description: SSH port. Must match the entry in known_hosts.
+    required: true
+  user:
+    description: SSH user.
+    required: true
+  ssh-key:
+    description: Private key that the server restricts with rrsync.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Sync files
+      shell: bash
+      run: bash "$GITHUB_ACTION_PATH/deploy.sh"
+      env:
+        SSH_HOST: ${{ inputs.host }}
+        SSH_PORT: ${{ inputs.port }}
+        SSH_USER: ${{ inputs.user }}
+        SSH_KEY: ${{ inputs.ssh-key }}
