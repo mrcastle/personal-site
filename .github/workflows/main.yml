@@ -7,7 +7,6 @@ name: Deploy on push
 permissions: {}
 
 jobs:
-  # Runs the npm code, so it gets no secrets. Only dist/ passes to the deploy job.
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -37,8 +36,6 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-  # Runs no repo code. The key in the production environment is limited on the server
-  # (rrsync -wo) to writing into public_html.
   deploy:
     name: Deploy
     needs: build
@@ -60,7 +57,6 @@ jobs:
           PORT: "21098"
           KNOWN_HOST: "[sleeplessjade.com]:21098 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvc8C+ehlK4VCq02tIS0rNhHTiaejwKZCtBias7gjG2"
         run: |
-          # --delete below would empty the site if the build were missing.
           [[ -f dist/index.html ]] || { echo "::error::dist/index.html is missing; not deploying."; exit 1; }
 
           key="$RUNNER_TEMP/deploy_key"
@@ -70,14 +66,10 @@ jobs:
           ssh=(ssh -p "$PORT" -i "$key" -o IdentitiesOnly=yes -o BatchMode=yes
             -o StrictHostKeyChecking=yes -o "UserKnownHostsFile=$RUNNER_TEMP/known_hosts")
 
-          # -c uploads only changed files. No -p, so public_html keeps the permissions the
-          # web server needs. The excludes are cPanel's files, which the build doesn't make.
           rsync -rltcvz --delete \
             --exclude=/.well-known/ --exclude=/cgi-bin/ --exclude=/.ftpquota \
             -e "${ssh[*]}" dist/ "$DEPLOY_USER@$HOST:"
 
-          # Fails the run if the key ever loses its server-side restriction (e.g. cPanel
-          # rewrites authorized_keys), since it would then be a full login.
           if out=$("${ssh[@]}" "$DEPLOY_USER@$HOST" true 2>&1) || [[ $out != *"is not rsync"* ]]; then
             echo "::error::The deploy key isn't restricted to rsync on the server. Check ~/.ssh/authorized_keys."
             exit 1
