@@ -18,7 +18,7 @@ jobs:
       contents: read
       actions: read # zizmor online audits
       pull-requests: write # report comment
-    uses: mrcastle/ci-workflows/.github/workflows/node.yml@6171baf16dbe22b1ce129ea37e45c778f8884aa8 # v1.0.0
+    uses: mrcastle/ci-workflows/.github/workflows/node.yml@957cc026235c28943ce29165d0e6fc8dc88e47da # v1.0.1
     with:
       node-version: "24"
       lint: npm run lint
