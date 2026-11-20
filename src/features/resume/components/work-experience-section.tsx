@@ -1,5 +1,5 @@
-import { getExperiences } from "../../../data/experience";
-import ExperienceEntry from "./experience-entry/experience-entry";
+import { getExperiences } from "../data/experience";
+import ExperienceEntry from "./experience-entry";
 
 function WorkExperienceSection() {
   const experiences = getExperiences();
