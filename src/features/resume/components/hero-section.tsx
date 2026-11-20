@@ -1,8 +1,8 @@
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
-import { getUserData } from "../../../data/user";
+import { getUserData } from "../data/user";
 
-import IconLink from "./icon-link/icon-link";
+import IconLink from "./icon-link";
 
 import "./hero-section.css";
 
