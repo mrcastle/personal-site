@@ -1,10 +1,83 @@
-.canvas-container .p5Canvas {
+/* Per-body values (--color, --diameter, --distance, --orbit-time,
+   --orbital-phase) and the sun's --sun-color/--sun-diameter are supplied as
+   inline styles by orrery.tsx. --orbital-path-color below is the default and
+   can be overridden with the component's pathColor prop. */
+
+.orrery {
+  --orbital-path-color: rgb(74 222 128 / 0.2);
+
   position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.solar-system-wrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.sun-wrapper {
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  translate: -50% -50%;
 
-  margin: 0;
+  height: var(--sun-diameter);
+  width: var(--sun-diameter);
 
-  z-index: -1;
+  .sun {
+    background-color: var(--sun-color);
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.celestial-body-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: calc((var(--distance) + var(--diameter)) * 2);
+  aspect-ratio: 1;
+
+  animation: spin var(--orbit-time) linear infinite;
+  animation-delay: calc(var(--orbit-time) * var(--orbital-phase, 0) * -1);
+
+  .orbital-path {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid var(--orbital-path-color);
+  }
+
+  .celestial-body {
+    position: absolute;
+    top: 0;
+    translate: 0 -50%;
+    border-radius: 50%;
+
+    background-color: var(--color);
+    height: var(--diameter);
+    width: var(--diameter);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

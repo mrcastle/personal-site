@@ -1,131 +1,65 @@
-import { P5Canvas } from "@p5-wrapper/react";
-
-import { sketch } from "../../assets/sketches/planets";
-import { useWindowDimensions } from "../../hooks/window";
-
+import type { CSSProperties } from "react";
 import "./orrery.css";
+import { orbitDuration } from "./timing.ts";
+import type { CelestialBody, Rgb } from "./types.ts";
 
-export type CelestialBody = {
-  name: string;
-  radius: number;
-  distance: number;
-  satellites: CelestialBody[] | null;
-  days: number;
-  color: RGBA;
-  showOrbitalPath?: boolean;
+declare module "react" {
+  interface CSSProperties {
+    /** Lets style objects set custom properties such as `--color` without a cast. */
+    [key: `--${string}`]: string | number | undefined;
+  }
+}
+
+type OrreryProps = {
+  system: CelestialBody;
+  /** Any CSS colour. Defaults to `--orbital-path-color` in orrery.css. */
+  pathColor?: string;
 };
 
-type RGBA = {
-  r: number;
-  g: number;
-  b: number;
-  a?: number;
-};
+function toRgb({ r, g, b }: Rgb): string {
+  return `rgb(${r} ${g} ${b})`;
+}
 
-const celestialBodyData: CelestialBody[] = [
-  {
-    name: "Sol",
-    color: { r: 250, g: 204, b: 21 },
-    radius: 200,
-    distance: 0,
-    days: 0,
-    satellites: [
-      {
-        name: "Mercury",
-        color: { r: 51, g: 47, b: 46 },
-        radius: 30,
-        distance: 50,
-        days: 88,
-        showOrbitalPath: true,
-        satellites: null,
-      },
-      {
-        name: "Venus",
-        color: { r: 230, g: 230, b: 230 },
-        radius: 50,
-        distance: 140,
-        days: 200,
-        showOrbitalPath: true,
-        satellites: null,
-      },
-      {
-        name: "Earth",
-        color: { r: 47, g: 78, b: 106 },
-        radius: 53,
-        distance: 260,
-        days: 365,
-        showOrbitalPath: true,
-        satellites: [
-          {
-            name: "Luna",
-            radius: 12,
-            distance: 8,
-            days: 30,
-            color: { r: 246, g: 241, b: 213 },
-            satellites: null,
-          },
-        ],
-      },
-      {
-        name: "Mars",
-        color: { r: 153, g: 61, b: 0 },
-        radius: 32,
-        distance: 390,
-        days: 500,
-        showOrbitalPath: true,
-        satellites: null,
-      },
-      {
-        name: "Jupiter",
-        color: { r: 176, g: 127, b: 53 },
-        radius: 150,
-        distance: 550,
-        days: 1000,
-        showOrbitalPath: true,
-        satellites: null,
-      },
-      {
-        name: "Saturn",
-        color: { r: 176, g: 143, b: 54 },
-        radius: 125,
-        distance: 750,
-        days: 2500,
-        showOrbitalPath: true,
-        satellites: null,
-      },
-      {
-        name: "Uranus",
-        color: { r: 54, g: 104, b: 150 },
-        radius: 100,
-        distance: 900,
-        days: 3500,
-        showOrbitalPath: true,
-        satellites: null,
-      },
-      {
-        name: "Neptune",
-        color: { r: 85, g: 128, b: 170 },
-        radius: 100,
-        distance: 1050,
-        days: 4000,
-        showOrbitalPath: true,
-        satellites: null,
-      },
-    ],
-  },
-];
+function bodyVars(body: CelestialBody): CSSProperties {
+  return {
+    "--color": toRgb(body.color),
+    "--diameter": `${body.radius}px`,
+    "--distance": `${body.distance}px`,
+    "--orbit-time": orbitDuration(body.days),
+    "--orbital-phase": body.orbitalPhase ?? 0,
+  };
+}
 
-function Orrery() {
-  const { height, width } = useWindowDimensions();
-
+function CelestialBodyView({ body }: { body: CelestialBody }) {
   return (
-    <P5Canvas
-      sketch={sketch}
-      windowHeight={height}
-      windowWidth={width}
-      celestialBodies={celestialBodyData}
-    />
+    <div className="celestial-body-wrapper" style={bodyVars(body)}>
+      {body.showOrbitalPath && <div className="orbital-path" />}
+      <div className="celestial-body">
+        {body.satellites?.map((satellite) => (
+          <CelestialBodyView key={satellite.name} body={satellite} />
+        ))}
+      </div>
+    </div>
   );
 }
 
-export default Orrery;
+export function Orrery({ system, pathColor }: OrreryProps) {
+  const style: CSSProperties = {
+    "--sun-color": toRgb(system.color),
+    "--sun-diameter": `${system.radius}px`,
+  };
+  if (pathColor) style["--orbital-path-color"] = pathColor;
+
+  return (
+    <div className="orrery" aria-hidden="true" style={style}>
+      <div className="solar-system-wrapper">
+        <div className="sun-wrapper">
+          <div className="sun" />
+        </div>
+        {system.satellites?.map((satellite) => (
+          <CelestialBodyView key={satellite.name} body={satellite} />
+        ))}
+      </div>
+    </div>
+  );
+}
