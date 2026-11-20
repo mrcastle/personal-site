@@ -20,7 +20,7 @@ jobs:
       pull-requests: write # report comment
     uses: mrcastle/ci-workflows/.github/workflows/node.yml@957cc026235c28943ce29165d0e6fc8dc88e47da # v1.0.1
     with:
-      node-version: "24"
+      node-version: "26"
       lint: npm run lint
       typecheck: npx tsc -b
       build: npm run build
