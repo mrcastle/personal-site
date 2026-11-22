@@ -8,25 +8,34 @@ function ExperienceEntry({ experience }: ExperienceEntryProps) {
   const { company, role, duration, description, skills } = experience;
 
   return (
-    <>
-      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-2.5 -start-1.5 border border-white dark:border-zinc-900 dark:bg-white-700"></div>
-      <div className="mb-4">
-        <h3 className="text-xl font-semibold text-emerald-400">{role}</h3>
-        <p className="text-gray-300">{company}</p>
-        <p className="text-gray-200 italic">{duration}</p>
-        <p className="text-white mt-2">{description}</p>
-        <div className="mt-4">
-          {skills.map((skill, index) => (
-            <span
-              key={`${role}-skill-${index}`}
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-      </div>
-    </>
+    <article className="group relative rounded-xl p-4 transition duration-300 hover:bg-white/[0.04] lg:group-hover/list:opacity-50 lg:hover:opacity-100!">
+      {/* The star on the timeline. The line runs 1.5rem (the list padding)
+          to the left of this entry. */}
+      <span
+        className="absolute -left-6 top-6 size-2 -translate-x-1/2 rounded-full bg-white shadow-[0_0_8px_2px_rgb(255_255_255/0.5)] transition duration-300 group-hover:scale-150 group-hover:bg-accent group-hover:shadow-[0_0_14px_4px_rgb(110_231_183/0.6)]"
+        aria-hidden="true"
+      />
+
+      <p className="font-mono text-xs uppercase tracking-widest text-accent">
+        {duration}
+      </p>
+      <h3 className="mt-2 font-display text-xl font-semibold text-ink transition-colors group-hover:text-accent">
+        {role}
+      </h3>
+      <p className="text-ink-muted">{company}</p>
+      <p className="mt-3 text-sm leading-relaxed text-ink">{description}</p>
+
+      <ul className="mt-4 flex flex-wrap gap-2" aria-label="Skills">
+        {skills.map((skill) => (
+          <li
+            key={skill}
+            className="rounded-full border border-accent/25 bg-accent/10 px-3 py-1 font-mono text-xs text-emerald-200"
+          >
+            {skill}
+          </li>
+        ))}
+      </ul>
+    </article>
   );
 }
 
