@@ -8,13 +8,8 @@ function ExperienceEntry({ experience }: ExperienceEntryProps) {
   const { company, role, duration, description, skills } = experience;
 
   return (
-    <article className="group relative rounded-xl p-4 transition duration-300 hover:bg-white/[0.04] lg:group-hover/list:opacity-50 lg:hover:opacity-100!">
-      {/* The star on the timeline. The line runs 1.5rem (the list padding)
-          to the left of this entry. */}
-      <span
-        className="absolute -left-6 top-6 size-2 -translate-x-1/2 rounded-full bg-white shadow-[0_0_8px_2px_rgb(255_255_255/0.5)] transition duration-300 group-hover:scale-150 group-hover:bg-accent group-hover:shadow-[0_0_14px_4px_rgb(110_231_183/0.6)]"
-        aria-hidden="true"
-      />
+    <article className="experience-entry group relative rounded-xl p-4">
+      <span className="timeline-star" aria-hidden="true" />
 
       <p className="font-mono text-xs uppercase tracking-widest text-accent">
         {duration}

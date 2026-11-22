@@ -10,11 +10,6 @@ type SiteHeaderProps = {
   sections: Section[];
 };
 
-/**
- * The left column on large screens: one panel, pinned and vertically
- * centred while the right column scrolls. On small screens it is a normal
- * panel at the top of the page.
- */
 function SiteHeader({ sections }: SiteHeaderProps) {
   const { name, introduction, github, linkedin } = getUserData();
 

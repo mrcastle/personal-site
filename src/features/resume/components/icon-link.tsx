@@ -4,12 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type IconLinkProps = {
   icon: IconDefinition;
   url: string;
-  /** Visible text next to the icon. */
   label: string;
   isEmail?: boolean;
 };
 
-/** A profile link: brand icon and name. */
 export function IconLink({ icon, url, label, isEmail }: IconLinkProps) {
   const href = isEmail ? `mailto:${url}` : url;
 

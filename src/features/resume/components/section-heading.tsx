@@ -1,19 +1,17 @@
-/** What the page passes each section, taken from its entry in SECTIONS. */
 export type SectionProps = {
   id: string;
-  /** The section's position on the page, starting at 1. */
-  index: number;
+  sectionNumber: number;
   title: string;
 };
 
-function SectionHeading({ id, index, title }: SectionProps) {
+function SectionHeading({ id, sectionNumber, title }: SectionProps) {
   return (
     <h2
       id={`${id}-heading`}
       className="mb-8 flex items-center gap-4 font-display text-2xl font-semibold tracking-tight text-ink"
     >
       <span className="font-mono text-sm font-normal text-accent">
-        {String(index).padStart(2, "0")}.
+        {String(sectionNumber).padStart(2, "0")}.
       </span>
       {title}
       <span

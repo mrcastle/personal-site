@@ -37,7 +37,7 @@ export function ResumePage() {
           <SiteHeader sections={SECTIONS} />
           <main id="content" className="space-y-8 pt-8 lg:w-[56%] lg:py-28">
             {SECTIONS.map(({ id, label, Component }, index) => (
-              <Component key={id} id={id} index={index + 1} title={label} />
+              <Component key={id} id={id} sectionNumber={index + 1} title={label} />
             ))}
           </main>
         </div>
