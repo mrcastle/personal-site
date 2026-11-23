@@ -6,7 +6,7 @@ export const experiences: WorkExperience[] = [
     company: "The Walt Disney Company",
     duration: "October 2025 - Present",
     description:
-      "Moved two high-traffic identity and account apps to blue-green releases, and built the CI/CD, monitoring, and release process around them.",
+      "Part of a team improving how web apps across Disney+, ESPN, and Hulu are built, tested, released, and monitored.",
     skills: [
       "Next.js",
       "Kubernetes",
