@@ -7,9 +7,8 @@ export type Rgb = { r: number; g: number; b: number };
 export type CelestialBody = {
   name: string;
   color: Rgb;
-  /** Drawn diameter in px, despite the name. */
-  radius: number;
-  /** Orbital radius is `distance + radius`, so a larger body sits further out. */
+  diameter: number;
+  /** Orbital radius is `distance + diameter`, so a larger body sits further out. */
   distance: number;
   /** Orbital period. Tuned for how the motion looks, not astronomical. */
   days: number;

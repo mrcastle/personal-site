@@ -10,7 +10,7 @@ type IconLinkProps = {
   isEmail?: boolean;
 };
 
-export function IconLink({ icon, url, label, isEmail }: IconLinkProps) {
+function IconLink({ icon, url, label, isEmail }: IconLinkProps) {
   const href = isEmail ? `mailto:${url}` : url;
 
   return (

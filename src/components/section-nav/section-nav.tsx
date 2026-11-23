@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import type { Section } from "../../types/section";
-import { formatSectionNumber } from "../../utils/section-number";
+import type { Section } from "@/types/section";
+import { formatSectionNumber } from "@/utils/section-number";
 
 import "./section-nav.css";
 

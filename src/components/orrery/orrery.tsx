@@ -23,7 +23,7 @@ function toRgb({ r, g, b }: Rgb): string {
 function bodyVars(body: CelestialBody): CSSProperties {
   return {
     "--color": toRgb(body.color),
-    "--diameter": `${body.radius}px`,
+    "--diameter": `${body.diameter}px`,
     "--distance": `${body.distance}px`,
     "--orbit-time": orbitDuration(body.days),
     "--orbital-phase": body.orbitalPhase ?? 0,
@@ -43,10 +43,10 @@ function CelestialBodyView({ body }: { body: CelestialBody }) {
   );
 }
 
-export function Orrery({ system, pathColor }: OrreryProps) {
+function Orrery({ system, pathColor }: OrreryProps) {
   const style: CSSProperties = {
     "--sun-color": toRgb(system.color),
-    "--sun-diameter": `${system.radius}px`,
+    "--sun-diameter": `${system.diameter}px`,
   };
   if (pathColor) style["--orbital-path-color"] = pathColor;
 
@@ -63,3 +63,5 @@ export function Orrery({ system, pathColor }: OrreryProps) {
     </div>
   );
 }
+
+export default Orrery;

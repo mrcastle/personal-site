@@ -1,9 +1,9 @@
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
-import { getUserData } from "../../config/user";
-import type { Section } from "../../types/section";
-import IconLink from "../icon-link/icon-link";
-import SectionNav from "../section-nav/section-nav";
+import { user } from "@/config/user";
+import type { Section } from "@/types/section";
+import IconLink from "@/components/icon-link/icon-link";
+import SectionNav from "@/components/section-nav/section-nav";
 
 import "./site-header.css";
 
@@ -12,7 +12,7 @@ type SiteHeaderProps = {
 };
 
 function SiteHeader({ sections }: SiteHeaderProps) {
-  const { name, introduction, github, linkedin } = getUserData();
+  const { name, introduction, github, linkedin } = user;
 
   return (
     <header className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-[42%] lg:items-center">

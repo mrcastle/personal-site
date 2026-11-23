@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { formatSectionNumber } from "../../utils/section-number";
+import { formatSectionNumber } from "@/utils/section-number";
 
 type PageSectionProps = {
   id: string;

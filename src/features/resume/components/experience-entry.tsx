@@ -1,4 +1,4 @@
-import type { WorkExperience } from "../data/experience";
+import type { WorkExperience } from "@/features/resume/types/experience";
 
 type ExperienceEntryProps = {
   experience: WorkExperience;

@@ -1,11 +1,9 @@
-import { getExperiences } from "../data/experience";
+import { experiences } from "@/features/resume/data/experience";
 import ExperienceEntry from "./experience-entry";
 
 import "./experience.css";
 
 function WorkExperienceSection() {
-  const experiences = getExperiences();
-
   return (
     <ol className="timeline space-y-2">
       {experiences.map((experience) => (

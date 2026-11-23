@@ -1,14 +1,14 @@
 import type { ComponentType } from "react";
 
-import MotionToggle from "./components/motion-toggle/motion-toggle";
-import { Orrery } from "./components/orrery/orrery";
-import { SOL } from "./components/orrery/solar-system";
-import PageSection from "./components/page-section/page-section";
-import SiteHeader from "./components/site-header/site-header";
-import StarField from "./components/star-field/star-field";
-import AboutSection from "./features/resume/components/about-section";
-import WorkExperienceSection from "./features/resume/components/work-experience-section";
-import type { Section } from "./types/section";
+import MotionToggle from "@/components/motion-toggle/motion-toggle";
+import Orrery from "@/components/orrery/orrery";
+import { SOL } from "@/components/orrery/solar-system";
+import PageSection from "@/components/page-section/page-section";
+import SiteHeader from "@/components/site-header/site-header";
+import StarField from "@/components/star-field/star-field";
+import AboutSection from "@/features/resume/components/about-section";
+import WorkExperienceSection from "@/features/resume/components/work-experience-section";
+import type { Section } from "@/types/section";
 
 /**
  * The page sections, in order. The nav and the sections both read their ids,

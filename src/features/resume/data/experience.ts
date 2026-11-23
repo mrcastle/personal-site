@@ -1,12 +1,6 @@
-export type WorkExperience = {
-  role: string;
-  company: string;
-  duration: string;
-  description: string;
-  skills: string[];
-};
+import type { WorkExperience } from "@/features/resume/types/experience";
 
-const experiences: WorkExperience[] = [
+export const experiences: WorkExperience[] = [
   {
     role: "Software Engineer II",
     company: "Planet DDS",
@@ -55,7 +49,3 @@ const experiences: WorkExperience[] = [
     skills: ["C#", ".NET MVC", "Javascript", "HTML", "CSS", "jQuery"],
   },
 ];
-
-export function getExperiences(): WorkExperience[] {
-  return experiences;
-}
