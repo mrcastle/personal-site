@@ -22,14 +22,21 @@ export const experiences: WorkExperience[] = [
     duration: "July 2024 - October 2025",
     description:
       "Led the team on a greenfield Angular micro-frontend app that gathers truck data for PACCAR's global platform, built most of the frontend, and mentored the junior developers who worked mostly on the backend.",
-    skills: ["Angular", ".NET Core", "Docker", "AWS", "GitHub Actions"],
+    skills: [
+      "Angular",
+      "TypeScript",
+      ".NET Core",
+      "Docker",
+      "AWS",
+      "GitHub Actions",
+    ],
   },
   {
     role: "Senior Software Developer",
     company: "Planet DDS",
     duration: "March 2023 - January 2024",
     description:
-      "Consolidated customer records into golden-record entries with a Node.js microservice, and upgraded the Node.js and React code to current versions.",
+      "Consolidated customer records for a dental software platform into golden-record entries with a Node.js microservice, and upgraded the Node.js and React code to current versions.",
     skills: [
       "TypeScript",
       "React",
@@ -52,7 +59,7 @@ export const experiences: WorkExperience[] = [
     company: "Eleven Peppers Studios",
     duration: "February 2018 - March 2021",
     description:
-      "Helped a team build the Small Business Administration's Ascent learning platform, and redesigned an internal web app for TiVo with the design team.",
+      "Helped build the Small Business Administration's Ascent learning platform, and worked with the design team to redesign an internal web app for TiVo.",
     skills: ["React", "TypeScript", "Ruby on Rails", "HTML", "CSS", "AWS"],
   },
   {
@@ -60,7 +67,7 @@ export const experiences: WorkExperience[] = [
     company: "MetaCoastal",
     duration: "May 2017 - February 2018",
     description:
-      "Overhauled the Oracle Service Cloud integrations for a group of travel companies, helped launch a revamped version of their website in Angular, and built an analytics dashboard for their executives.",
+      "Overhauled the Oracle Service Cloud integrations for MetaCoastal's travel companies, helped launch a revamped Angular booking site for one of them, and built an analytics dashboard for the executives.",
     skills: ["C#", ".NET", "Angular", "Azure", "JavaScript"],
   },
   {
