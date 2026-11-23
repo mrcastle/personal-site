@@ -7,7 +7,7 @@ export type UserData = {
   email: string;
 };
 
-const userData: UserData = {
+export const user: UserData = {
   name: "Matthew Castle",
   introduction: "Hello there. I'm",
   description:
@@ -16,7 +16,3 @@ const userData: UserData = {
   linkedin: "https://www.linkedin.com/in/matthewraycastle/",
   email: "matt.castle@sleeplessjade.com",
 };
-
-export function getUserData(): UserData {
-  return userData;
-}

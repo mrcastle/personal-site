@@ -1,74 +1,83 @@
-import clsx from "clsx";
+import { useState } from "react";
 
 import "./star-field.css";
-
-//get random position between 1 - 100;
-function randomPosition(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-type StarClass = "star1" | "star2" | "star3" | "star4" | "star5" | "star6";
 
 type Star = {
   top: number;
   left: number;
   size: number;
-  starClass: StarClass;
+  /** One of the six twinkle timings in star-field.css. */
+  twinkle: number;
 };
 
-function generateStars(): Star[] {
-  const sizes = [1, 1, 2, 3, 4];
-  const starClassNames: StarClass[] = [
-    "star1",
-    "star2",
-    "star3",
-    "star4",
-    "star5",
-    "star6",
-  ];
+/**
+ * A depth layer. Far layers hold many small stars and move little on
+ * scroll; near layers hold a few large stars and move more, which reads as
+ * parallax depth.
+ */
+type Layer = {
+  name: "far" | "mid" | "near";
+  count: number;
+  sizes: number[];
+  /** How far the layer drifts up over a full page scroll, in vh. */
+  travel: number;
+};
 
-  const stars: Star[] = [];
-  for (let i = 0; i < 300; i++) {
-    const top = randomPosition(1, 100);
-    const left = randomPosition(1, 100);
+const LAYERS: Layer[] = [
+  { name: "far", count: 200, sizes: [1, 1, 1.5], travel: 6 },
+  { name: "mid", count: 80, sizes: [1.5, 2, 2.5], travel: 18 },
+  { name: "near", count: 24, sizes: [2.5, 3, 3.5], travel: 36 },
+];
 
-    const randomSize = Math.floor(Math.random() * sizes.length);
-    const size = sizes[randomSize];
+function random(min: number, max: number): number {
+  return Math.random() * (max - min) + min;
+}
 
-    const randomStarClass = Math.floor(Math.random() * starClassNames.length);
-    const starClass = starClassNames[randomStarClass];
+function pick<T>(items: T[]): T {
+  return items[Math.floor(Math.random() * items.length)];
+}
 
-    stars.push({ top, left, size, starClass });
-  }
-  return stars;
+function generateStars({ count, sizes }: Layer): Star[] {
+  return Array.from({ length: count }, () => ({
+    top: random(0, 100),
+    left: random(0, 100),
+    size: pick(sizes),
+    twinkle: Math.floor(Math.random() * 6) + 1,
+  }));
 }
 
 function StarField() {
-  const stars = generateStars();
+  // Generated on first render only, so re-renders keep the same sky.
+  const [layers] = useState(() =>
+    LAYERS.map((layer) => ({ ...layer, stars: generateStars(layer) })),
+  );
 
   return (
-    <div className="light">
-      {stars.map((star, index) => {
-        const { top, left, size, starClass } = star;
-
-        const className = clsx({
-          "star-base": true,
-          [starClass]: true,
-        });
-
-        return (
-          <div
-            className={className}
-            key={`star-${index}`}
-            style={{
-              top: `${top}%`,
-              left: `${left}%`,
-              height: `${size}px`,
-              width: `${size}px`,
-            }}
-          />
-        );
-      })}
+    <div className="sky" aria-hidden="true">
+      <div className="nebula" />
+      {layers.map(({ name, travel, stars }) => (
+        <div
+          key={name}
+          className={`star-layer star-layer-${name}`}
+          style={{ "--travel": `${travel}vh` }}
+        >
+          {stars.map(({ top, left, size, twinkle }, index) => (
+            <div
+              key={index}
+              className={`star-base star${twinkle}`}
+              style={{
+                top: `${top}%`,
+                left: `${left}%`,
+                height: `${size}px`,
+                width: `${size}px`,
+              }}
+            />
+          ))}
+        </div>
+      ))}
+      <div className="shooting-star shooting-star-1" />
+      <div className="shooting-star shooting-star-2" />
+      <div className="shooting-star shooting-star-3" />
     </div>
   );
 }

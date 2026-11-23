@@ -1,13 +1,37 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/jetbrains-mono";
+
+@theme {
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --font-display: "Space Grotesk Variable", "Inter Variable", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --color-accent: #6ee7b7;
+  --color-ink: #e2e8f0;
+  --color-ink-muted: #94a3b8;
+  /* Panels sit over the sun and moving planets. At this opacity, muted text
+     keeps WCAG AA contrast (4.5:1) even with the sun directly behind it. */
+  --color-surface: rgb(17 16 36 / 0.84);
+  --color-line: rgb(255 255 255 / 0.1);
+}
+
+/* All page text lives on these panels, never directly on the sky. */
+@utility panel {
+  border: 1px solid var(--color-line);
+  border-radius: 1rem;
+  background-color: var(--color-surface);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+}
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: dark;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  color: var(--color-ink);
+  background-color: #14122b;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,15 +39,61 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  width: 100%;
   min-height: 100vh;
 }
 
-#root {
-  width: 100%;
-  height: 100vh;
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 30%, transparent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Scroll-driven reveal. Browsers without scroll timelines show the content
+   at rest, so nothing depends on this running. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 2.5rem;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Set by the motion toggle. The orrery places each body on its orbit with a
+   negative animation delay, so the animation stays applied and only its play
+   state changes. */
+.motion-paused
+  :is(.orrery *, .star-base, .shooting-star, .nebula, .name-gradient) {
+  animation-play-state: paused !important;
 }

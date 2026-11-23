@@ -1,0 +1,58 @@
+.timeline {
+  --timeline-gutter: 1.5rem;
+
+  position: relative;
+  padding-inline-start: var(--timeline-gutter);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset-block: 1rem;
+    left: 0;
+    width: 1px;
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-accent) 70%, transparent),
+      rgb(255 255 255 / 0.2),
+      transparent
+    );
+  }
+}
+
+.experience-entry {
+  transition:
+    background-color 300ms ease,
+    opacity 300ms ease;
+
+  &:hover {
+    background-color: rgb(255 255 255 / 0.04);
+  }
+}
+
+@media (width >= 64rem) {
+  .timeline:hover .experience-entry:not(:hover) {
+    opacity: 0.5;
+  }
+}
+
+.timeline-star {
+  position: absolute;
+  top: 1.5rem;
+  left: calc(-1 * var(--timeline-gutter));
+  width: 0.5rem;
+  height: 0.5rem;
+  translate: -50% 0;
+  border-radius: 999px;
+  background-color: #fff;
+  box-shadow: 0 0 8px 2px rgb(255 255 255 / 0.5);
+  transition:
+    scale 300ms ease,
+    background-color 300ms ease,
+    box-shadow 300ms ease;
+
+  .experience-entry:hover & {
+    scale: 1.5;
+    background-color: var(--color-accent);
+    box-shadow: 0 0 14px 4px color-mix(in oklab, var(--color-accent) 60%, transparent);
+  }
+}

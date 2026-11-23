@@ -3,14 +3,14 @@ import type { CelestialBody } from "./types.ts";
 export const SOL: CelestialBody = {
   name: "Sol",
   color: { r: 250, g: 204, b: 21 },
-  radius: 200,
+  diameter: 200,
   distance: 0,
   days: 0,
   satellites: [
     {
       name: "Mercury",
       color: { r: 51, g: 47, b: 46 },
-      radius: 30,
+      diameter: 30,
       distance: 100,
       days: 88,
       orbitalPhase: 0.55,
@@ -20,7 +20,7 @@ export const SOL: CelestialBody = {
     {
       name: "Venus",
       color: { r: 230, g: 230, b: 230 },
-      radius: 50,
+      diameter: 50,
       distance: 156,
       days: 200,
       orbitalPhase: 0.39,
@@ -30,7 +30,7 @@ export const SOL: CelestialBody = {
     {
       name: "Earth",
       color: { r: 47, g: 78, b: 106 },
-      radius: 53,
+      diameter: 53,
       distance: 250,
       days: 365,
       orbitalPhase: 0.63,
@@ -39,7 +39,7 @@ export const SOL: CelestialBody = {
         {
           name: "Luna",
           color: { r: 246, g: 241, b: 213 },
-          radius: 12,
+          diameter: 12,
           distance: 20,
           days: 30,
           orbitalPhase: 0.2,
@@ -51,7 +51,7 @@ export const SOL: CelestialBody = {
     {
       name: "Mars",
       color: { r: 153, g: 61, b: 0 },
-      radius: 32,
+      diameter: 32,
       distance: 350,
       days: 500,
       orbitalPhase: 0.31,
@@ -61,7 +61,7 @@ export const SOL: CelestialBody = {
     {
       name: "Jupiter",
       color: { r: 176, g: 127, b: 53 },
-      radius: 150,
+      diameter: 150,
       distance: 420,
       days: 1000,
       orbitalPhase: 0.7,
@@ -71,7 +71,7 @@ export const SOL: CelestialBody = {
     {
       name: "Saturn",
       color: { r: 176, g: 143, b: 54 },
-      radius: 125,
+      diameter: 125,
       distance: 600,
       days: 2500,
       orbitalPhase: 0.45,
@@ -81,7 +81,7 @@ export const SOL: CelestialBody = {
     {
       name: "Uranus",
       color: { r: 54, g: 104, b: 150 },
-      radius: 100,
+      diameter: 100,
       distance: 760,
       days: 3500,
       orbitalPhase: 0.58,
@@ -91,7 +91,7 @@ export const SOL: CelestialBody = {
     {
       name: "Neptune",
       color: { r: 85, g: 128, b: 170 },
-      radius: 100,
+      diameter: 100,
       distance: 920,
       days: 4000,
       orbitalPhase: 0.35,
