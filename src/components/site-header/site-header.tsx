@@ -1,8 +1,9 @@
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
-import { getUserData } from "../data/user";
-import IconLink from "./icon-link";
-import SectionNav, { type Section } from "./section-nav";
+import { getUserData } from "../../config/user";
+import type { Section } from "../../types/section";
+import IconLink from "../icon-link/icon-link";
+import SectionNav from "../section-nav/section-nav";
 
 import "./site-header.css";
 

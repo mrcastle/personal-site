@@ -53,6 +53,6 @@
   .experience-entry:hover & {
     scale: 1.5;
     background-color: var(--color-accent);
-    box-shadow: 0 0 14px 4px rgb(110 231 183 / 0.6);
+    box-shadow: 0 0 14px 4px color-mix(in oklab, var(--color-accent) 60%, transparent);
   }
 }

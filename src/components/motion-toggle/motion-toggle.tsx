@@ -18,8 +18,7 @@ function MotionToggle() {
     <button
       type="button"
       onClick={() => setPaused((value) => !value)}
-      aria-pressed={paused}
-      className="panel fixed bottom-4 right-4 z-40 flex items-center gap-2 rounded-full! px-4 py-2 font-mono text-xs text-ink transition hover:border-accent/40 hover:text-accent"
+      className="panel fixed bottom-4 right-4 z-40 flex items-center gap-2 rounded-full px-4 py-2 font-mono text-xs text-ink transition hover:border-accent/40 hover:text-accent"
     >
       <svg viewBox="0 0 16 16" className="size-3.5 fill-current" aria-hidden="true">
         {paused ? (

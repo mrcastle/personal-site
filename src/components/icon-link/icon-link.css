@@ -1,0 +1,9 @@
+.icon-link-icon {
+  transition: filter 300ms ease;
+}
+
+.icon-link:hover .icon-link-icon {
+  filter: drop-shadow(
+    0 0 8px color-mix(in oklab, var(--color-accent) 70%, transparent)
+  );
+}

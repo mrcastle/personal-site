@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-export type Section = {
-  id: string;
-  label: string;
-};
+import type { Section } from "../../types/section";
+import { formatSectionNumber } from "../../utils/section-number";
+
+import "./section-nav.css";
 
 type SectionNavProps = {
   sections: Section[];
@@ -58,13 +58,13 @@ function SectionNav({ sections }: SectionNavProps) {
             <a
               href={`#${id}`}
               aria-current={activeId === id ? "location" : undefined}
-              className="group flex items-center gap-4 py-2"
+              className="nav-link flex items-center gap-4 py-2"
             >
-              <span className="font-mono text-xs text-ink-muted transition-colors group-hover:text-accent group-aria-[current=location]:text-accent">
-                {String(index + 1).padStart(2, "0")}
+              <span className="nav-number font-mono text-xs">
+                {formatSectionNumber(index + 1)}
               </span>
-              <span className="h-px w-8 bg-ink-muted/60 transition-all duration-300 group-hover:w-16 group-hover:bg-accent group-aria-[current=location]:w-16 group-aria-[current=location]:bg-accent group-aria-[current=location]:shadow-[0_0_8px_var(--color-accent)]" />
-              <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-muted transition-colors group-hover:text-ink group-aria-[current=location]:text-ink">
+              <span className="nav-dash" />
+              <span className="nav-label font-mono text-xs uppercase tracking-[0.2em]">
                 {label}
               </span>
             </a>
