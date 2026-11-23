@@ -3,7 +3,7 @@ import type { WorkExperience } from "@/features/resume/types/experience";
 export const experiences: WorkExperience[] = [
   {
     role: "Senior Software Developer",
-    company: "Walt Disney Company",
+    company: "The Walt Disney Company",
     duration: "October 2025 - Present",
     description:
       "Moved two high-traffic identity and account apps to blue-green releases, and built the CI/CD, monitoring, and release process around them.",
